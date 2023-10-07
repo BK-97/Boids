@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject prefab;
+    public Boid prefab;
     public float spawnRadius = 10;
     public int spawnCount = 10;
     public Color colour;
-
-    void Awake()
+    void Start()
     {
         for (int i = 0; i < spawnCount; i++)
         {
             Vector3 pos = transform.position + Random.insideUnitSphere * spawnRadius;
-            GameObject boid = Instantiate(prefab);
+            Boid boid = Instantiate(prefab);
             boid.transform.position = pos;
             boid.transform.forward = Random.insideUnitSphere;
+            BoidManager.Instance.AddBoid(boid);
         }
+        BoidManager.Instance.Instantiate();
     }
 
     private void OnDrawGizmos()
@@ -25,5 +26,4 @@ public class Spawner : MonoBehaviour
         Gizmos.color = new Color(colour.r, colour.g, colour.b, 0.3f);
         Gizmos.DrawSphere(transform.position, spawnRadius);
     }
-
 }
