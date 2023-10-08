@@ -24,5 +24,4 @@ public static class BoidHelper {
             directions[i] = new Vector3 (x, y, z);
         }
     }
-
 }

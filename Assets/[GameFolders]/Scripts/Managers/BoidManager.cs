@@ -9,7 +9,6 @@ public class BoidManager : Singleton<BoidManager>
     public BoidSettings settings;
     public ComputeShader compute;
     private List<Boid> boids=new List<Boid>();
-
     public void Instantiate()
     {
         foreach (Boid b in boids)
@@ -21,9 +20,11 @@ public class BoidManager : Singleton<BoidManager>
     {
         boids.Add(newBoid);
     }
+
     void Update()
     {
-        if (boids != null)
+       
+        if (boids.Count!=0)
         {
 
             int numBoids = boids.Count;
