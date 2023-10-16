@@ -1,6 +1,5 @@
 ## Boids
 
-I created this project to implement a simple simulation of fish schooling behavior in an aquarium environment, aiming to learn more about the flocking behavior using the boids algorithm.
 
 ---
 #Gifs
