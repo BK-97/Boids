@@ -18,7 +18,7 @@ public class ChanceCalculator : MonoBehaviour
             SetEnum();
             initalizeChanceList = true;
         }
-        if (chanceDataList.Count > (int)FishTypes.NUMBER_OF_TYPES)
+        if (chanceDataList.Count > (int)BoidTypes.NUMBER_OF_TYPES)
         {
             chanceDataList.Clear();
             SetEnum();
@@ -30,11 +30,11 @@ public class ChanceCalculator : MonoBehaviour
 
     private void SetEnum()
     {
-        int enumCount = FishTypes.GetValues(typeof(FishTypes)).Length - 1;
+        int enumCount = BoidTypes.GetValues(typeof(BoidTypes)).Length - 1;
 
         for (int i = 0; i < enumCount; i++)
         {
-            FishTypes fishType = (FishTypes)i;
+            BoidTypes fishType = (BoidTypes)i;
             ChanceData newChanceData = new ChanceData();
             newChanceData.name = fishType.ToString();
             newChanceData.chance = 0f;

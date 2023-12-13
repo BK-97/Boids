@@ -5,16 +5,17 @@ using UnityEngine;
 public class Boid : MonoBehaviour
 {
     #region Params
-    BoidSettings settings;
+    public BoidSettings settings;
 
-    // State
+    public BoidTypes boidType;
+    public BoidBehaviors boidBehavior;
+
     [HideInInspector]
     public Vector3 position;
     [HideInInspector]
     public Vector3 forward;
     Vector3 velocity;
 
-    // To update:
     [HideInInspector]
     public Vector3 avgFlockHeading;
     [HideInInspector]
@@ -24,8 +25,8 @@ public class Boid : MonoBehaviour
     [HideInInspector]
     public int numPerceivedFlockmates;
 
-    // Cached
     Transform cachedTransform;
+    public Transform leader;
     Transform target;
     #endregion
     #region InitializeMethods
@@ -34,8 +35,10 @@ public class Boid : MonoBehaviour
         cachedTransform = transform;
     }
 
-    public void Initialize(BoidSettings settings, Transform target)
+    public void Initialize(BoidSettings settings, Transform target, BoidTypes _boidType, BoidBehaviors _boidBehaviour)
     {
+        boidType = _boidType;
+        boidBehavior = _boidBehaviour;
         this.target = target;
         this.settings = settings;
 
@@ -44,7 +47,10 @@ public class Boid : MonoBehaviour
 
         float startSpeed = (settings.minSpeed + settings.maxSpeed) / 2;
         velocity = transform.forward * startSpeed;
+        GetComponent<FishModel>().SetModel(_boidType);
+        leader = cachedTransform;
     }
+
     #endregion
     #region BoidMethods
     public void UpdateBoid()
@@ -65,13 +71,12 @@ public class Boid : MonoBehaviour
 
             var alignmentForce = SteerTowards(avgFlockHeading) * settings.alignWeight;
             var cohesionForce = SteerTowards(offsetToFlockmatesCentre) * settings.cohesionWeight;
-            var seperationForce = SteerTowards(avgAvoidanceHeading) * settings.seperateWeight;
+            var separationForce = SteerTowards(avgAvoidanceHeading) * settings.seperateWeight;
 
             acceleration += alignmentForce;
             acceleration += cohesionForce;
-            acceleration += seperationForce;
+            acceleration += separationForce;
         }
-
         if (IsHeadingForCollision())
         {
             Vector3 collisionAvoidDir = ObstacleRays();
@@ -98,7 +103,6 @@ public class Boid : MonoBehaviour
         {
             return true;
         }
-        else { }
         return false;
     }
     #endregion

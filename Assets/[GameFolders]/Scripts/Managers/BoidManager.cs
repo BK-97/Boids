@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class BoidManager : Singleton<BoidManager>
 {
+    public enum BoidBehavior { Aggressive,Passive}
     const int threadGroupSize = 1024;
 
     public BoidSettings settings;
     public ComputeShader compute;
-    private List<Boid> boids=new List<Boid>();
-    public void Instantiate()
+    [HideInInspector]
+    public List<Boid> boids;
+    bool startUpdate;
+    public void InitalizeBoids()
     {
         foreach (Boid b in boids)
         {
-            b.Initialize(settings, null);
+            int randomInt = Random.Range(0, 2);
+            b.Initialize(settings, null,(BoidTypes)randomInt,BoidBehaviors.Passive);
         }
+        startUpdate = true;
     }
     public void AddBoid(Boid newBoid)
     {
@@ -23,10 +28,10 @@ public class BoidManager : Singleton<BoidManager>
 
     void Update()
     {
-       
-        if (boids.Count!=0)
+        if (!startUpdate)
+            return;
+        if (boids.Count != 0)
         {
-
             int numBoids = boids.Count;
             var boidData = new BoidData[numBoids];
 
@@ -43,6 +48,7 @@ public class BoidManager : Singleton<BoidManager>
             compute.SetInt("numBoids", boids.Count);
             compute.SetFloat("viewRadius", settings.perceptionRadius);
             compute.SetFloat("avoidRadius", settings.avoidanceRadius);
+
 
             int threadGroups = Mathf.CeilToInt(numBoids / (float)threadGroupSize);
             compute.Dispatch(0, threadGroups, 1, 1);
@@ -62,6 +68,7 @@ public class BoidManager : Singleton<BoidManager>
             boidBuffer.Release();
         }
     }
+
 
     public struct BoidData
     {

@@ -7,7 +7,7 @@ public class FishModel : MonoBehaviour
     public List<GameObject> fishModels;
     private GameObject currentModel;
 
-    public void SetModel(FishTypes fishType)
+    public void SetModel(BoidTypes fishType)
     {
         currentModel = fishModels[(int)fishType];
         currentModel.SetActive(true);

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3559297176007848097}
   - component: {fileID: 3559297176007848096}
-  - component: {fileID: 3559297175903618780}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -49,25 +48,3 @@ MonoBehaviour:
   spawnRadius: 2.37
   spawnCount: 350
   colour: {r: 0.46925062, g: 0.60729694, b: 0.8962264, a: 1}
---- !u!114 &3559297175903618780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3559297176007848099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8aad07d256ca36f4a8d1ea24f423c345, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chanceDataList:
-  - FishType: 0
-    chance: 100
-  - FishType: 1
-    chance: 0
-  - FishType: 2
-    chance: 0
-  - FishType: 3
-    chance: 0
-  totalChance: 100
